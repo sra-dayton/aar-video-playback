@@ -18,5 +18,17 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^1.4.1"
+  },
+  "dependencies": {
+    "express": "^4.15.2",
+    "fluent-ffmpeg": "^2.1.0",
+    "js2xmlparser": "^3.0.0",
+    "node-ffprobe": "^1.2.2",
+    "plyr": "^2.0.11",
+    "remote": "^0.2.6",
+    "windows-shortcuts": "^0.1.4",
+    "xml-query": "^1.4.0",
+    "xml-reader": "^2.4.3",
+    "xml2js": "^0.4.17"
   }
 }

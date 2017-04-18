@@ -2,18 +2,98 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>AAR Video Playback</title>
+    <link href="css/bootstrap-slider.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.plyr.io/2.0.11/plyr.css">
+    <style>
+      #ex1Slider .slider-selection {
+        background: #BABABA;
+      }
+
+      .floated_video
+      {
+        float: left;
+      }
+
+    </style>
+    <script src="bootstrap-slider.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.plyr.io/2.0.11/plyr.js"></script>
+    <script>plyr.setup();</script>
   </head>
-  <body>
-    <h1>Hello World!</h1>
+  <body style="background-color: lightgray">
+  <!--<a href="#" id="open-secondwindow-button" onclick="openFile();" class="button" style="float:right">Settings</a>-->
+  <br/>
+    <!--<div align="center"><h1 style="margin-bottom: 0px; color: #8F8F8F;">AAR Video Playback</h1></div>-->
     <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
+   <!-- We are using Node.js <script>document.write(process.versions.node)</script>,
     Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
+    and Electron <script>document.write(process.versions.electron)</script>.-->
+
+    <!--<div>-->
+    <!--<video id="video1" width="480" height="320" controls autoplay>-->
+      <!--<source src="file:\\C:\Users\w116sxn\AppData\Roaming\iSpy\WebServerRoot\Media\Video\IXLDZ\1_2017-03-20_13-26-01.mp4" type="video/mp4">-->
+      <!--Your browser does not support the video tag.-->
+    <!--</video>-->
+
+    <!--<video id="video2" width="480" height="320" controls >-->
+      <!--<source src="file:\\C:\Users\w116sxn\AppData\Roaming\iSpy\WebServerRoot\Media\Video\1\1.mp4" type="video/mp4">-->
+      <!--Your browser does not support the video tag.-->
+    <!--</video>-->
+    <!--</div>-->
+    <!--<div>-->
+    <!--<video id="video3" width="480" height="320" controls>-->
+      <!--<source src="file:\\C:\Users\w116sxn\AppData\Roaming\iSpy\WebServerRoot\Media\Video\2\2.mp4" type="video/mp4">-->
+      <!--Your browser does not support the video tag.-->
+    <!--</video>-->
+
+    <!--<video id="video4" width="480" height="320" controls >-->
+      <!--<source src="file:\\C:\Users\w116sxn\AppData\Roaming\iSpy\WebServerRoot\Media\Video\3\3.mp4" type="video/mp4">-->
+      <!--Your browser does not support the video tag.-->
+    <!--</video>-->
+    <!--</div>-->
+
+    <!--<div>-->
+      <!--<video id="video5" width="480" height="320" controls>-->
+        <!--<source src="file:\\C:\Users\w116sxn\AppData\Roaming\iSpy\WebServerRoot\Media\Video\KYDLG\1_2017-03-13_16-53-15.mp4" type="video/mp4">-->
+        <!--Your browser does not support the video tag.-->
+      <!--</video>-->
+
+      <!--<video id="video6" width="480" height="320" controls  >-->
+        <!--<source src="file:\\C:\Users\w116sxn\AppData\Roaming\iSpy\WebServerRoot\Media\Video\MBRXP\2_2017-03-17_19-26-43.mp4" type="video/mp4">-->
+        <!--Your browser does not support the video tag.-->
+      <!--</video>-->
+    <!--</div>-->
+
+    <div id="videoDiv">
+
+    </div>
+
+    <!--<input id="defaultSlider" style="width: 75%;" type="range" min="0" max="60" step="1" value="0" />-->
+
+    <!--<div><button id="v-goto-forward">Go to 10 Sec</button></div>-->
+    <!--<div><button id="v-goto-backward">Go to 0 Sec</button></div>-->
   </body>
 
   <script>
     // You can also require other files to run in this process
+    require('./config.js')
     require('./renderer.js')
+    require('./server_upd.js')
+//    require('./server_http.js')
   </script>
+
+  <!--<script>-->
+      <!--function func(){-->
+          <!--var d = document.getElementsByTagName("video");-->
+          <!--for (var i = 0; i < d.length; i++) {-->
+              <!--console.log(d[i].id);-->
+              <!--d[i].removeAttribute("controls");-->
+              <!--d[i].setAttribute("controls", "True");-->
+          <!--}-->
+      <!--}-->
+
+      <!--//window.setInterval(func, 3000);-->
+
+  <!--</script>-->
 </html>
