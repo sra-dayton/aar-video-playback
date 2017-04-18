@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # electron-quick-start
 
 **Clone and run for a quick way to see Electron in action.**
@@ -38,3 +39,7 @@ For more example apps, see the
 created by the awesome electron community.
 
 #### License [CC0 1.0 (Public Domain)](LICENSE.md)
+=======
+# aar-video-playback
+Video playback tool for the AAR project
+>>>>>>> deb0eacb6e443ac82fee393a4a877a6b66134052
