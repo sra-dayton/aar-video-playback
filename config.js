@@ -2,8 +2,8 @@
  * Created by w116sxn on 4/2/2017.
  */
 gOptions = {
-    videoDir: 'Y:/iSpy Files/3-13-2017/video/',
-    videoOrder: ['GoPro1',
+    videoDir: 'Y:/iSpy Files/4-17-2017/video/',
+    videoOrder: ['GoPro',
                 'QETEX',
                  // 'ALUNP',
                  // 'Dave Bridges iPhone',
@@ -13,7 +13,8 @@ gOptions = {
                  // 'Phone 44',
                  // 'Phone 45',
                  // 'Phone 46',
-                 'QETEX',
+                 'Test1',
                  'Silo Cam 2',
-                 'Warehouse Axis']
+                 'Warehouse Axis'
+    ]
 };
