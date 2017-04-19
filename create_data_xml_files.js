@@ -31,35 +31,33 @@ writeMyData();
 function writeMyData() {
 
     filesInVideoDir = fs.readdir(videoDir, function (err, files) {
-        // console.log(files);
+        console.log(files);
 
         files.forEach((videoFile, index, array) => {
-            // console.log(videoFile);
-            if (!(videoFile.endsWith('.MP4') || videoFile.endsWith('.mp4')))
+            console.log(videoFile);
+            if(!(videoFile.endsWith('.MP4') || videoFile.endsWith('.mp4')))
                 filesToSkip++;
             // console.log(filesToSkip);
-            if (videoFile === 'data_1.xml' || videoFile === 'data.xml' || videoFile === 'Thumbs.db')
+            if(videoFile === 'data_1.xml' || videoFile === 'data.xml' || videoFile === 'Thumbs.db')
                 ;
-            else {
+            else{
                 // console.log('HERE')
                 fs.stat(videoFile, function (error, stats) {
                     // console.log(stats)
-                    if (stats.isFile()) {
-                        // console.log(stats.birthtime);
+                    if(stats.isFile()){
+                        console.log(stats.birthtime);
                         var birthtime = new Date(stats.birthtime);
-                        console.log(birthtime)
-                        var dateString = '1_' + birthtime.getFullYear() + '-' + ("0" + (birthtime.getMonth() + 1)).slice(-2) + '-' + ("0" + birthtime.getDate()).slice(-2) + '_' + ("0" + birthtime.getHours()).slice(-2) + '-' + ("0" + birthtime.getMinutes()).slice(-2) + '-' + ("0" + birthtime.getSeconds()).slice(-2) + '.mp4';
-                        console.log(dateString);
+                        var dateString = '1_' + birthtime.getFullYear() + '-' + ("0" + (birthtime.getMonth()+1)).slice(-2) + '-' + ("0" + birthtime.getDate()).slice(-2) + '_' + ("0" + birthtime.getHours()).slice(-2) + '-' + ("0" + birthtime.getMinutes()).slice(-2) + '-' + ("0" + birthtime.getSeconds()).slice(-2) + '.mp4';
+                        console.log('1_' + birthtime.getFullYear() + '-' + ("0" + (birthtime.getMonth()+1)).slice(-2) + '-' + ("0" + birthtime.getDate()).slice(-2) + '_' + ("0" + birthtime.getHours()).slice(-2) + '-' + ("0" + birthtime.getMinutes()).slice(-2) + '-' +("0" +  birthtime.getSeconds()).slice(-2) + '.mp4');
 
-                        probe(path.resolve('.', videoFile), function (err, metadata) {
+                        probe(path.resolve(videoDir, videoFile), function(err, metadata) {
                             console.log(err)
-                            fileArray.push({
-                                "@": {
-                                    'Filename': dateString,
-                                    'SizeBytes': stats.size,
-                                    'DurationSeconds': Math.ceil(metadata['format']['duration']),
-                                    'OriginalFileName': videoFile
-                                }
+                            fileArray.push({"@": {
+                                'Filename': dateString,
+                                'SizeBytes': stats.size,
+                                'DurationSeconds': Math.ceil(metadata['format']['duration']),
+                                'OriginalFileName': videoFile
+                            }
 
                             });
                             itemsProcessed++
@@ -68,7 +66,7 @@ function writeMyData() {
                             fs.renameSync(videoFile, dateString);
                             // console.log('Probe Time:' + metadata['probe_time'])
 
-                            if (itemsProcessed === array.length - filesToSkip) {
+                            if(itemsProcessed === array.length - filesToSkip){
                                 console.log(fileArray)
                                 filesToSave["File"] = fileArray;
                                 console.log(js2xmlparser.parse("Files", filesToSave));
@@ -77,37 +75,35 @@ function writeMyData() {
                                 fs.closeSync(fd);
                             }
                         });
-
-                        // ffmpeg.ffprobe(path.resolve('.', videoFile), function (err, metadata) {
-                        //     fileArray.push({
-                        //         "@": {
-                        //             'Filename': dateString,
-                        //             'SizeBytes': stats.size,
-                        //             'DurationSeconds': Math.ceil(metadata['format']['duration']),
-                        //             'OriginalFileName': videoFile
-                        //         }
-                        //     });
-                        //     itemsProcessed++
-                        //     // console.log(array.length)
-                        //     // console.log(index)
-                        //     fs.renameSync(videoFile, dateString);
-                        //
-                        //     if (itemsProcessed === array.length - filesToSkip) {
-                        //         console.log(fileArray)
-                        //         filesToSave["File"] = fileArray;
-                        //         console.log(js2xmlparser.parse("Files", filesToSave));
-                        //         var fd = fs.openSync('data_1.xml', 'w');
-                        //         fs.writeSync(fd, js2xmlparser.parse("Files", filesToSave));
-                        //         fs.closeSync(fd);
-                        //     }
-                        // });
-
-
                     }
                 })
             }
+
+
         });
     })
 }
 
-
+// ffmpeg.ffprobe(path.resolve(videoDir, videoFile), function(err, metadata) {
+//     // console.log(metadata)
+//     fileArray.push({"@": {
+//         'Filename': dateString,
+//         'SizeBytes': stats.size,
+//         'Duration': Math.ceil(metadata['format']['duration']),
+//         'OriginalFileName': videoFile
+//     }
+//     });
+//     itemsProcessed++
+//     // console.log(array.length)
+//     console.log(index)
+//     fs.renameSync(videoFile, dateString);
+//
+//     if(itemsProcessed === array.length - filesToSkip){
+//         console.log(fileArray)
+//         filesToSave["File"] = fileArray;
+//         console.log(js2xmlparser.parse("Files", filesToSave));
+//         var fd = fs.openSync('data_1.xml', 'w');
+//         fs.writeSync(fd, js2xmlparser.parse("Files", filesToSave));
+//         fs.closeSync(fd);
+//     }
+// });

@@ -75,16 +75,20 @@ else if(command === 'MoveToTime'){
             if(lowerEpoch < sliderValue && sliderValue < lowerEpoch + lowerFileDuration){
                 fileToPlay = lowerFile;
                 console.log('file://' + videoDir + d[i].id + '/' + fileToPlay);
-                if(d[i].getAttribute('src') !== 'file://' + videoDir + d[i].id + '/' + fileToPlay)
+                if(d[i].getAttribute('src') !== 'file://' + videoDir + d[i].id + '/' + fileToPlay){
                     d[i].setAttribute('src', 'file://' + videoDir + d[i].id + '/' + fileToPlay);
+                    d[i].setAttribute('data-timestamp', lowerEpoch);
+                }
                 d[i].currentTime = (sliderValue - lowerEpoch)/1000;
                 // d[i].currentTime = d[i].currentTime - (sliderValue - lowerEpoch)/1000;
             }
             else {
                 fileToPlay = upperFile;
                 console.log('file://' + videoDir + d[i].id + '/' + fileToPlay);
-                if(d[i].getAttribute('src') !== 'file://' + videoDir + d[i].id + '/' + fileToPlay)
+                if(d[i].getAttribute('src') !== 'file://' + videoDir + d[i].id + '/' + fileToPlay) {
                     d[i].setAttribute('src', 'file://' + videoDir + d[i].id + '/' + fileToPlay);
+                    d[i].setAttribute('data-timestamp', upperEpoch);
+                }
                 d[i].currentTime = (upperEpoch - sliderValue)/1000;
 
                 if(prevSliderValue > sliderValue){

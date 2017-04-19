@@ -50,45 +50,26 @@ function writeMyData() {
                         var dateString = '1_' + birthtime.getFullYear() + '-' + ("0" + (birthtime.getMonth()+1)).slice(-2) + '-' + ("0" + birthtime.getDate()).slice(-2) + '_' + ("0" + birthtime.getHours()).slice(-2) + '-' + ("0" + birthtime.getMinutes()).slice(-2) + '-' + ("0" + birthtime.getSeconds()).slice(-2) + '.mp4';
                         console.log('1_' + birthtime.getFullYear() + '-' + ("0" + (birthtime.getMonth()+1)).slice(-2) + '-' + ("0" + birthtime.getDate()).slice(-2) + '_' + ("0" + birthtime.getHours()).slice(-2) + '-' + ("0" + birthtime.getMinutes()).slice(-2) + '-' +("0" +  birthtime.getSeconds()).slice(-2) + '.mp4');
 
-                        // probe(path.resolve('.', videoFile), function(err, metadata) {
-                        //     console.log(err)
-                        //     fileArray.push({"@": {
-                        //         'Filename': dateString,
-                        //         'SizeBytes': stats.size,
-                        //         'DurationSeconds': Math.ceil(metadata['format']['duration']),
-                        //         'OriginalFileName': videoFile
-                        //     }
-                        //
-                        //     });
-                        //     itemsProcessed++
-                        //     // console.log(array.length)
-                        //     // console.log(index)
-                        //     fs.renameSync(videoFile, dateString);
-                        //     // console.log('Probe Time:' + metadata['probe_time'])
-                        //
-                        //     if(itemsProcessed === array.length - filesToSkip){
-                        //         console.log(fileArray)
-                        //         filesToSave["File"] = fileArray;
-                        //         console.log(js2xmlparser.parse("Files", filesToSave));
-                        //         var fd = fs.openSync('data_1.xml', 'w');
-                        //         fs.writeSync(fd, js2xmlparser.parse("Files", filesToSave));
-                        //         fs.closeSync(fd);
-                        //     }
-                        // });
+                        probe(path.resolve(videoDir, videoFile), function(err, metadata) {
+                            console.dir(metadata['metadata']['creation_time'])
+                            var birthtime = new Date(metadata['metadata']['creation_time']);
+                            console.log(birthtime.getHours() + 4)
+                            var dateString = '1_' + birthtime.getFullYear() + '-' + ("0" + (birthtime.getMonth()+1)).slice(-2) + '-' + ("0" + birthtime.getDate()).slice(-2) + '_' + ("0" + (birthtime.getHours() + 4)).slice(-2) + '-' + ("0" + birthtime.getMinutes()).slice(-2) + '-' + ("0" + birthtime.getSeconds()).slice(-2) + '.mp4';
+                            console.log('1_' + birthtime.getFullYear() + '-' + ("0" + (birthtime.getMonth()+1)).slice(-2) + '-' + ("0" + birthtime.getDate()).slice(-2) + '_' + ("0" + (birthtime.getHours() + 4)).slice(-2) + '-' + ("0" + birthtime.getMinutes()).slice(-2) + '-' +("0" +  birthtime.getSeconds()).slice(-2) + '.mp4');
 
-                        ffmpeg.ffprobe(path.resolve('.', videoFile), function(err, metadata) {
-                            // console.log(metadata)
                             fileArray.push({"@": {
                                 'Filename': dateString,
                                 'SizeBytes': stats.size,
-                                'Duration': Math.ceil(metadata['format']['duration']),
+                                'DurationSeconds': Math.ceil(metadata['format']['duration']),
                                 'OriginalFileName': videoFile
                             }
+
                             });
                             itemsProcessed++
                             // console.log(array.length)
-                            console.log(index)
+                            // console.log(index)
                             fs.renameSync(videoFile, dateString);
+                            // console.log('Probe Time:' + metadata['probe_time'])
 
                             if(itemsProcessed === array.length - filesToSkip){
                                 console.log(fileArray)
@@ -99,8 +80,6 @@ function writeMyData() {
                                 fs.closeSync(fd);
                             }
                         });
-
-
                     }
                 })
             }
@@ -109,3 +88,28 @@ function writeMyData() {
         });
     })
 }
+
+
+// ffmpeg.ffprobe(path.resolve('.', videoFile), function(err, metadata) {
+//     // console.log(metadata)
+//     fileArray.push({"@": {
+//         'Filename': dateString,
+//         'SizeBytes': stats.size,
+//         'Duration': Math.ceil(metadata['format']['duration']),
+//         'OriginalFileName': videoFile
+//     }
+//     });
+//     itemsProcessed++
+//     // console.log(array.length)
+//     console.log(index)
+//     fs.renameSync(videoFile, dateString);
+//
+//     if(itemsProcessed === array.length - filesToSkip){
+//         console.log(fileArray)
+//         filesToSave["File"] = fileArray;
+//         console.log(js2xmlparser.parse("Files", filesToSave));
+//         var fd = fs.openSync('data_1.xml', 'w');
+//         fs.writeSync(fd, js2xmlparser.parse("Files", filesToSave));
+//         fs.closeSync(fd);
+//     }
+// });

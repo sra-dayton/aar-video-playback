@@ -75,11 +75,36 @@ fs.readdir(videoDir, (err, files) => {
         video.setAttribute('width', '480');
         video.setAttribute('height', '275');
         video.setAttribute('controls', 'true');
+        video.setAttribute('data-timestamp', 0)
         var source = document.createElement('source');
         var files = fs.readdirSync(videoDir + folder);
         source.setAttribute('src', 'file://' + videoDir + folder + '/' + files[0]);
         source.setAttribute('type', 'video/mp4');
         video.appendChild(source);
+
+
+        video.addEventListener('ended',myHandler,false);
+        function myHandler(e) {
+            console.dir(e);
+            console.dir(e['srcElement']['currentSrc'].split('/').reverse()[0]);
+            console.dir(e['srcElement']['currentSrc'].split('/').reverse()[1]);
+            console.dir(e['srcElement']['attributes'].getNamedItem('data-timestamp')['nodeValue'])
+            var currentEpoch = e['srcElement']['attributes'].getNamedItem('data-timestamp')['nodeValue'];
+
+
+            var epochs = Object.keys(filesToLoad[ e['srcElement']['id']]);
+            if(epochs.length > 0) {
+                epochs.sort(function (a, b) {
+                    return a - b
+                });
+            }
+            i = epochs.indexOf(currentEpoch)
+            var fileToPlay = filesToLoad[ e['srcElement']['id']][epochs[i + 1]]['filename']
+            e['target'].setAttribute('src', 'file://' + videoDir + e['srcElement']['id'] + '/' + fileToPlay);
+            e['target'].setAttribute('data-timestamp', epochs[i + 1]);
+            e['target'].play();
+        }
+
         p.innerHTML = 'Camera: ' + folder;
         p.setAttribute('style', 'padding-bottom:5px; padding-top:5px; padding-left:5px; background-color:#8F8F8F; color: white; margin-bottom:0px; margin-top:5px;');
         p.setAttribute('align', 'left');
